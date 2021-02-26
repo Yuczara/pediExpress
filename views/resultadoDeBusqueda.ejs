@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Página con tablita de buscar</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Total</th>
+                <th scope="col">Modificar/eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <th scope="row">
+
+                </th>
+                <td>
+                    <%=producto.producto%>
+                </td>
+                <td>
+                    <%=producto.precio%>
+                </td>
+                <td>
+                    <%=producto.cantidad%>
+                </td>
+                <td>
+                    <%=producto.precio*producto.cantidad%>
+                </td>
+                <td>
+                    <h3><a href="/buscarID/<%=producto.id%>">✏️</a>/<a href="/eliminar/<%=producto.id%>">🗑️</a></h3>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

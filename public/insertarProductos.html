@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insertar producto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+                <form action="/buscar" method="POST" class="d-flex">
+                    <input class="form-control me-2" type="search" name="buscar" id="buscar" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <div class="row">
+        <div class="col-1 col-md-3"></div>
+        <div class="col-10 col-md-6">
+            
+            <h1>Insertar un producto</h1>
+            <form action="/insertarProducto" method="POST">
+                <input class="form form-control" type="text" placeholder="Producto" name="producto" id="producto" autofocus>
+                <input class="form form-control mt-3" type="text" placeholder="Imagen" name="imagen" id="imagen" >
+                <input class="form form-control mt-3" type="text" placeholder="Descripción" name="descripcion" id="descripcion" >
+                <input class="form form-control mt-3" type="text" placeholder="Precio" name="precio" id="precio">
+                <input class="form form-control mt-3" type="text" placeholder="Cantidad" name="cantidad" id="cantidad">
+                <select class="form-select my-3" aria-label="Default select example" name="categoria" id="categoria">
+                    <option selected>Selecciona una categoría</option>
+                    <option value="alimentacion">Alimentacion</option>
+                    <option value="farmacia">Farmacia</option>
+                    <option value="tecnologia">Tecnología</option>´
+                    <option value="tecnologia">otros</option>
+                  </select>
+                <select class="form-select my-3" aria-label="Default select example" name="empresa" id="empresa">
+                    <option selected>Selecciona una empresa</option>
+                    <option value="aurrera">Aurrera</option>
+                    <option value="soriana">Soriana</option>
+                    <option value="amazon">Amazon</option>´
+                    <option value="otros">Otros</option>
+                  </select>
+                <label class="form-label">Ventas</label>
+                <input class="form form-control mt-3 mb-3" type="number" placeholder="Ventas" name="ventas" id="ventas" value=0 disabled >
+                <button class="form form-control btn btn-primary mt-3" type="submit">Guardar</button>
+                <a href="/mostrarProductos" class="btn btn-danger mt-3 col-12">Cancelar</a>
+            </form>
+
+        </div>
+    </div>
+</body>
+
+</html>
