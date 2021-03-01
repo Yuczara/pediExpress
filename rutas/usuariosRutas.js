@@ -16,14 +16,66 @@ ruta.get('/otra', (req, res) => {
 });
 ruta.get('/cerrar', (req, res) => {
     req.session.destroy();
-    res.send("Sesion Cerrada");
+    res.redirect('/index.html')
 });
 
 
 // const fs = require('fs');
 // const { v4: uuidv4 } = require('uuid');
+//---------------- REGISTRAR USUARIOS ------------------------
 
-//---------------- INSERTAR REGISTROS ------------------------
+ruta.post('/registrarUsuario', (req, res) => {
+    var usuario = new Usuario({
+        usuario: req.body.usuario,
+        correo: req.body.correo,
+        contrasena:req.body.contrasena,
+    });
+    var resultado = usuario.save();
+
+    resultado.then(prod => {
+        res.redirect('/index.html');
+    }).catch(err => {
+        res.status(400).send("error")
+    });
+});
+
+// ------------------- API REGISTRAR USUARIO ------------------
+ruta.post('/api/registrarUsuario', (req, res) => {
+    var usuario = new Usuario({
+        usuario: req.body.usuario,        
+        correo: req.body.correo,
+        contrasena:req.body.contrasena,
+    });
+    var resultado = usuario.save();
+    resultado.then(prod => {
+        res.send("insertado");
+    }).catch(err => {
+        res.status(400).send("error")
+    });
+});
+//------------BUSCAR USUARIO------------------------
+ruta.post('/buscarUsuario', (req, res) => {
+    var name = req.body.correo;
+    var pass = req.body.contrasena;
+    Usuario.find({$and:[{"correo": name}, {"contrasena":pass}]}, function(err, user) 
+ {
+    if (err)
+    {
+        res.send(err);
+    }
+    console.log(user); 
+
+    req.session.usuario = name;
+    res.redirect('/productosVenta');
+    
+   // res.json(Usuario);
+
+ });
+
+});
+
+
+//---------------- INSERTAR PRODUCTOS ------------------------
 
 ruta.post('/insertarProducto', (req, res) => {
     var producto = new Producto({
@@ -250,35 +302,5 @@ ruta.get('api/buscarIdProducto/:id',(req,res)=>{
         res.json(400).json("Error");
     })
 });
-//---------------- REGISTRAR USUARIOS ------------------------
 
-ruta.post('/registrarUsuario', (req, res) => {
-    var usuario = new Usuario({
-        usuario: req.body.usuario,
-        correo: req.body.correo,
-        contrasena:req.body.contrasena,
-    });
-    var resultado = usuario.save();
-    resultado
-        .then(prod => {
-            res.redirect('/mostrarProductos')
-        }).catch(err => {
-            res.status(400).send("Ocurrio un error al guardar el registro"+ err)
-        })
-});
-
-// ------------------- API REGISTRAR USUARIO ------------------
-ruta.post('/api/registrarUsuario', (req, res) => {
-    var usuario = new Usuario({
-        usuario: req.body.usuario,        
-        correo: req.body.correo,
-        contrasena:req.body.contrasena,
-    });
-    var resultado = usuario.save();
-    resultado.then(prod => {
-        res.send("insertado");
-    }).catch(err => {
-        res.status(400).send("error")
-    });
-});
 module.exports = ruta;

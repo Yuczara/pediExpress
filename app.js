@@ -22,6 +22,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
+
 app.set('view engine', 'ejs');
 app.use('/', express.static(path.join(__dirname, '/public')));
 app.use(express.urlencoded({ extended: true })); //Para recibir datos del formulario
