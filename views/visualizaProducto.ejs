@@ -1,3 +1,4 @@
+
 <%- include('templates/cabeceraVendedor.ejs') %>
   <!--  <div class="row">
         <div class="col-1 col-md-3"></div>
@@ -22,8 +23,12 @@
         <img src="<%=producto[0].imagen%>"  width="500px" alt="responsive" >
       <div class="col-md-6 float-md-end mb-3 ms-md-3">
              <h1 class="mt-3 display-1"><%=producto[0].producto%></h1>
-             <h4 class="ms-md-3 mt-3"><%=producto[0].descripcion%></h4>
-             <h5 class="fw-bold ms-md-3" style="color: red;">$<%=producto[0].precio%></h5>
+             <p class="fs-4" class="ms-md-3 mt-3"><%=producto[0].descripcion%></p>
+             <p class="fs-4" class="ms-md-3 mt-3">Categoría: <%=producto[0].categoria%> por <%=producto[0].empresa%></p>
+             <p class=" fs-2 fw-bold ms-md-3 ml-3 " style="color: rgb(13, 182, 64);">$<%=producto[0].precio%></p>
+             <input class="form form-control mt-3" type="number" placeholder="Cantidad" name="cantidad" id="cantidad">
+             <button class="form form-control btn btn-success mt-3" type="submit">Agregar al Carrito <img id='icon' src='https://cdn1.iconfinder.com/data/icons/ecommerce-61/48/eccomerce_-_shopping_cart_add-256.png'></button>
+             <a href="/productosVenta" class=" form form-control btn btn-danger mt-3 col-4">Cancelar<img id="icon" src="https://cdn2.iconfinder.com/data/icons/letters-and-numbers-1/32/lowercase_letter_x_red-256.png"></a>   
       </div>
        
       </div>

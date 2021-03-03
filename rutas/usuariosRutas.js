@@ -1,10 +1,41 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const ruta = express.Router();
 const Producto = require('../modelos/productoModelo');
 const Usuario = require('../modelos/usuarioModelo');
+git
+ruta.post('/login', (req, res) => {
+    let body = req.body;
+    Usuario.findOne({correo: body.correo},(err, usuarioDB)=>{
+        if(err){
+            return res.status(500).json({
+                ok: false,
+                err: err
+            })
+        }
+        if (!usuarioDB){
+            return res.status(400).json({
+                ok: false,
+                err:{
+                    message: "Usuario o contraseña incorrectos"
+                }
+            })
+        }
+        var result = (body.contrasena == usuarioDB.contrasena);
+        if (result) {
+             console.log("Password correct");
+             var rol = (usuarioDB.rol=="vendedor");
+             if(rol){
+                 res.redirect('/mostrarProductos');
+             }else{
+                res.redirect('/productosVenta');
+             }
 
-ruta.get('/login', (req, res) => {
-    res.render('login');
+        } else {
+             console.log("Password wrong");
+        }
+        req.session.usuario = usuarioDB.correo;
+    })
 });
 ruta.get('/sesion', (req, res) => {
     req.session.usuario = 'Fulanito';
@@ -29,6 +60,7 @@ ruta.post('/registrarUsuario', (req, res) => {
         usuario: req.body.usuario,
         correo: req.body.correo,
         contrasena:req.body.contrasena,
+        rol:req.body.rol,
     });
     var resultado = usuario.save();
 
@@ -57,21 +89,25 @@ ruta.post('/api/registrarUsuario', (req, res) => {
 ruta.post('/buscarUsuario', (req, res) => {
     var name = req.body.correo;
     var pass = req.body.contrasena;
-    Usuario.find({$and:[{"correo": name}, {"contrasena":pass}]}, function(err, user) 
- {
-    if (err)
-    {
-        res.send(err);
-    }
-    console.log(user); 
-
-    req.session.usuario = name;
-    res.redirect('/productosVenta');
-    
-   // res.json(Usuario);
-
- });
-
+    var resultado = Usuario.find({"correo":name});
+    resultado
+        .then(prod => {
+            res.redirect('/productosVenta');
+           /* if (prod.length > 0) {
+                /*console.log(validado);
+                if(validado){
+                    res.send('contraseña correcta');
+                    res.redirect('/productosVenta'); 
+                }else{
+                    res.send('contraseña mala');
+                }
+            } else {
+                res.send('noooo');                                      
+            }*/
+        })
+        .catch(err => {
+            res.status(400).send('Error al realizar la consulta' + err);
+        });
 });
 
 
