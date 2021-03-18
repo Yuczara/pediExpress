@@ -5,7 +5,8 @@ const path = require('path');
 const usuarios = require('./rutas/usuariosRutas');
 
 
-mongoose.connect('mongodb+srv://yuczara:crybaby1021@cluster0.roeiv.mongodb.net/proyecto?retryWrites=true&w=majority', { userNewParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://yuczara:crybaby1021@cluster0.roeiv.mongodb.net/proyecto?retryWrites=true&w=majority',
+ { userNewParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("Conectado a MongoDB");
     })
