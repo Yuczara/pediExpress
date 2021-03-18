@@ -3,10 +3,10 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const path = require('path');
 const usuarios = require('./rutas/usuariosRutas');
-
+//const cors = requiere('cors');
 
 mongoose.connect('mongodb+srv://yuczara:crybaby1021@cluster0.roeiv.mongodb.net/proyecto?retryWrites=true&w=majority',
- { userNewParser: true, useUnifiedTopology: true })
+{useNewUrlParser: true , useUnifiedTopology:true})
     .then(() => {
         console.log("Conectado a MongoDB");
     })
@@ -26,6 +26,7 @@ app.use(session({
 
 
 app.set('view engine', 'ejs');
+//app.use(cors());
 app.use('/', express.static(path.join(__dirname, '/public')));
 app.use(express.urlencoded({ extended: true })); //Para recibir datos del formulario
 app.use('/', usuarios);

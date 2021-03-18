@@ -9,6 +9,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <title>PediExpress</title>
     <style>
         * {
@@ -64,42 +65,70 @@
                 </div>
                 <div class="col-lg-7 px-6 pt-5 "><center>
                     <h1 class="font-weight-bold py-3">PediExpress</h1>
-                    <form action="/registrarUsuario" method="POST">
+                    <form action="/registrarUsuario" method="POST" id="form">
                         <div class="form-row">
                             <div class="col-lg-7">
-                                <input type="text" name="usuario" id="usuario" placeholder="Ingresa tu nombre" class="form-control mt-3 p-2" />
+                                <input required type="text" name="usuario" id="usuario" placeholder="Ingresa tu nombre" class="form-control mt-3 p-2" />
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-lg-7">
-                                <input type="text" id='correo' name="correo" required placeholder="Ingresa mail" class="form-control mt-3 p-2" />
+                                <input required type="text" id='correo' name="correo" required placeholder="Ingresa mail" class="form-control mt-3 p-2" />
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-lg-7">
-                                <input type="password" id="contrasena" name="contrasena" placeholder="Ingresa contraseña" class="form-control mt-3 p-2" />
+                                <input  required type="password" id="contrasena" name="contrasena" placeholder="Ingresa contraseña" class="form-control mt-3 p-2" />
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-lg-7">
-                        <select class="form-select my-3" aria-label="Default select example" name="rol" id="rol">
-                            <option selected>Selecciona tu rol</option>
-                            <option value="vendedor">Vendedor</option>
+                        <select  required class="form-select my-3" aria-label="Default select example" name="rol" id="rol">
+                            <option value="">Selecciona tu rol</option> 
                             <option value="cliente">Cliente</option>
+                            <option value="vendedor">Vendedor</option>                            
                           </select>
                         </div>
                     </div>
                         <div class="form-row">
                             <div class="col-lg-7">
-                                <input class="btn1 mt-3 mb-5" type="submit" name="submit" value="Registrar" />
+                                <input class="btn1 mt-3 mb-5" type="submit" id="boton1"name="submit" value="Registrar" />
                             </div>
                         </div>
+                        <a href="index.html">Volver</a>
                     </form>    
                     </center>
                 </div>
             </div>
         </div>
     </section>
+    <script>
+        document.getElementById("boton1").onclick = function() {
+          var usu =  document.getElementById("usuario").value;
+          var pass=  document.getElementById("contrasena").value;
+          var mail=  document.getElementById("correo").value;
+          var rol =document.getElementById("rol").value;
+            if(usu=="" || pass=="" || mail=="" || rol==""){
+                Swal.fire({
+                position: 'top-center',
+                icon: 'error',
+                title: 'Registro fallido',
+                showConfirmButton: false,
+                timer: 1000
+            });
+            } else{
+                Swal.fire({
+                position: 'top-center',
+                icon: 'success',
+                title: 'Registro Exitoso',
+                showConfirmButton: false,
+                timer: 1000
+            });
+            }
+            
+            }
+                      
+    </script>
  </body>
 
 </html>

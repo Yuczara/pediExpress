@@ -1,50 +1,49 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const ruta = express.Router();
+//const puppeeter = require('pupee')
 const Producto = require('../modelos/productoModelo');
 const Usuario = require('../modelos/usuarioModelo');
-git
+
 ruta.post('/login', (req, res) => {
     let body = req.body;
     Usuario.findOne({correo: body.correo},(err, usuarioDB)=>{
         if(err){
             return res.status(500).json({
                 ok: false,
-                err: err
+                err: err                
             })
         }
-        if (!usuarioDB){
-            return res.status(400).json({
-                ok: false,
-                err:{
-                    message: "Usuario o contraseña incorrectos"
-                }
-            })
-        }
+
+        if(usuarioDB){
         var result = (body.contrasena == usuarioDB.contrasena);
         if (result) {
-             console.log("Password correct");
-             var rol = (usuarioDB.rol=="vendedor");
-             if(rol){
+            req.session.usuario = usuarioDB.correo;
+             var rol = (usuarioDB.rol);
+             if(rol== "vendedor"){
                  res.redirect('/mostrarProductos');
-             }else{
+             }else if(rol=="cliente"){
                 res.redirect('/productosVenta');
+             }else if(rol=="admin"){
+                res.redirect('/mostrarUsuarios');
              }
 
         } else {
-             console.log("Password wrong");
+            res.send('<script>alert("Contraseña Incorrecta"); location.href = "index.html";</script>')
         }
-        req.session.usuario = usuarioDB.correo;
+        
+    }else{
+        res.send('<script>alert("Usuario incorrecto"); location.href = "index.html";</script>')
+       
+    }
     })
 });
+
 ruta.get('/sesion', (req, res) => {
     req.session.usuario = 'Fulanito';
     res.send("Sesion inciada");
 });
 
-ruta.get('/otra', (req, res) => {
-    res.send("El ususario es: " + req.session.usuario);
-});
 ruta.get('/cerrar', (req, res) => {
     req.session.destroy();
     res.redirect('/index.html')
@@ -54,21 +53,25 @@ ruta.get('/cerrar', (req, res) => {
 // const fs = require('fs');
 // const { v4: uuidv4 } = require('uuid');
 //---------------- REGISTRAR USUARIOS ------------------------
-
 ruta.post('/registrarUsuario', (req, res) => {
+    let body = req.body;
     var usuario = new Usuario({
         usuario: req.body.usuario,
         correo: req.body.correo,
-        contrasena:req.body.contrasena,
-        rol:req.body.rol,
+        contrasena: req.body.contrasena,
+        rol: req.body.rol,
     });
-    var resultado = usuario.save();
-
-    resultado.then(prod => {
-        res.redirect('/index.html');
-    }).catch(err => {
-        res.status(400).send("error")
-    });
+    var correo = body.correo != Usuario.correo;
+    if (correo) {
+        res.send('<script>alert("Correo ya existente intente con otro"); location.href = "signIn.html";</script>');
+    } else {
+        var resultado = usuario.save();
+        resultado.then(prod => {
+            res.redirect('/index.html');
+        }).catch(err => {
+            res.status(400).send("error")
+        });
+    }
 });
 
 // ------------------- API REGISTRAR USUARIO ------------------
@@ -85,31 +88,6 @@ ruta.post('/api/registrarUsuario', (req, res) => {
         res.status(400).send("error")
     });
 });
-//------------BUSCAR USUARIO------------------------
-ruta.post('/buscarUsuario', (req, res) => {
-    var name = req.body.correo;
-    var pass = req.body.contrasena;
-    var resultado = Usuario.find({"correo":name});
-    resultado
-        .then(prod => {
-            res.redirect('/productosVenta');
-           /* if (prod.length > 0) {
-                /*console.log(validado);
-                if(validado){
-                    res.send('contraseña correcta');
-                    res.redirect('/productosVenta'); 
-                }else{
-                    res.send('contraseña mala');
-                }
-            } else {
-                res.send('noooo');                                      
-            }*/
-        })
-        .catch(err => {
-            res.status(400).send('Error al realizar la consulta' + err);
-        });
-});
-
 
 //---------------- INSERTAR PRODUCTOS ------------------------
 
@@ -121,7 +99,7 @@ ruta.post('/insertarProducto', (req, res) => {
         precio: req.body.precio,
         cantidad: req.body.cantidad,
         categoria: req.body.categoria,        
-        empresa: req.body.empresa,
+        empresa: req.session.usuario,
         ventas: 0,
     });
     var resultado = producto.save();
@@ -155,17 +133,25 @@ ruta.post('/api/insertarProducto', (req, res) => {
 
 // ----------------- MOSTRAR PRODUCTOS -------------------------
 ruta.get('/mostrarProductos', (req, res) => {
-    var productos = Producto.find({ "estado": true });
+    if(!req.session.usuario){
+        res.redirect('index.html')
+    }
+    var productos = Producto.find({ "empresa": req.session.usuario});
     productos.then(prod => {
             res.render('mostrarProductos', { productos: prod });
         })
         .catch(err => {
             res.status(400).send("Error al extraer la informacion");
         });
+    
 });
+
 
 // ----------------- MOSTRAR PRODUCTOS API-------------------------
 ruta.get('/api/mostrarProductos', (req, res) => {
+    if(!req.session.usuario){
+        res.redirect('index.html')
+    }
     var productos = Producto.find({ "estado": true });
     productos.then(prod => {
             res.json(prod);
@@ -285,11 +271,91 @@ ruta.post('/buscar', (req, res) => {
             res.status(400).send('Error al realizar la consulta' + err);
         });
 });
+//--------------------------------------------ADMINISTRADOR----------------------------------
+// ----------------- MOSTRAR USUARIOS -------------------------
+ruta.get('/mostrarUsuarios', (req, res) => {
+    if(!req.session.usuario){
+        res.redirect('index.html')
+    }
+    var usuarios = Usuario.find({ "estado": true });
+    usuarios.then(user => {
+            res.render('mostrarUsuario', { usuarios: user });
+        })
+        .catch(err => {
+            res.status(400).send("Error al extraer la informacion");
+        });
+});
+
+ruta.get('/mostrarProductosAdmin', (req, res) => {
+    if(!req.session.usuario){
+        res.redirect('index.html')
+    }
+    var productos = Producto.find({ "estado": true });
+    productos.then(prod => {
+            res.render('administrar', { productos: prod });
+        })
+        .catch(err => {
+            res.status(400).send("Error al extraer la informacion");
+        });
+});
 
 
+//--------------------BUSCAR USUARIOS X ID--------------------------
+ruta.get('/buscarIDU/:id', (req, res) => {
+    var id = req.params.id;
+    var resultado = Usuario.findById(id);
+    resultado
+        .then(user => {
+            var usuarioArreglo = [];
+            usuarioArreglo.push(user);
+            res.render('modificarUsuario', { usuario: usuarioArreglo });
+        })
+        .catch(err => {
+            res.status(400).send("Error al realizar la consulta " + err);
+        })
+});
+//-------------------ACTUALIZAR------------------------------
+ruta.post('/modificarUsuarioDatos',(req,res)=>{
+    var {id,usuario,correo,contrasena,rol}=req.body;
+    var resultado=Usuario.findByIdAndUpdate(id,
+        {
+            $set:{
+                usuario,
+                correo,
+                contrasena,
+                rol,
+            }
+        },
+        {new:true}
+        );
+    resultado
+    .then(prod=>{
+        res.redirect('/mostrarUsuarios');
+    })
+    .catch(err=>{
+        res.status(400).send("Error al realizar actualizacion "+err);
+    });
+});
+//--------------ELIMINARUSUARIO---------------------
+ruta.get('/eliminarU/:id', (req,res)=>{
+    var id= req.params.id;
+    var name= req.params.usuario;
+    var resultado = Usuario.findByIdAndDelete(id);
+    resultado
+    .then(user =>{
+        res.redirect('/mostrarUsuarios');
+    })
+    .catch(err=>{
+        res.sratus(400).send("Error al eliminar"+err);
+    });
+
+});
 //-------------------------------------------------INTERFAZ DEL COMPRADOR--------------------------------
 // ----------------- MOSTRAR  -------------------------
 ruta.get('/productosVenta', (req, res) => {
+    if(!req.session.usuario){
+        res.redirect('index.html')
+    }
     var productos = Producto.find({ "estado": true });
     productos.then(prod => {
             res.render('productosVenta', { productos: prod });
@@ -299,8 +365,50 @@ ruta.get('/productosVenta', (req, res) => {
         });
 });
 
+//ALIMENTACION
+ruta.get('/alimentacion', (req, res) => {
+    if(!req.session.usuario){
+        res.redirect('index.html')
+    }
+    var productos = Producto.find({ "categoria": "alimentacion" });
+    productos.then(prod => {
+            res.render('alimentacion', { productos: prod });
+        })
+        .catch(err => {
+            res.status(400).send("Error al extraer la informacion");
+        });
+});
+//SALUD
+ruta.get('/salud', (req, res) => {
+    if(!req.session.usuario){
+        res.redirect('index.html')
+    }
+    var productos = Producto.find({ "categoria": "farmacia" });
+    productos.then(prod => {
+            res.render('salud', { productos: prod });
+        })
+        .catch(err => {
+            res.status(400).send("Error al extraer la informacion");
+        });
+});
+//TECNOLOGIA
+ruta.get('/tecnologia', (req, res) => {
+    if(!req.session.usuario){
+        res.redirect('index.html')
+    }
+    var productos = Producto.find({ "categoria": "tecnologia" });
+    productos.then(prod => {
+            res.render('tecnologia', { productos: prod });
+        })
+        .catch(err => {
+            res.status(400).send("Error al extraer la informacion");
+        });
+});
 // ----------------- MOSTRAR PRODUCTOS API-------------------------
 ruta.get('/api/productosVenta', (req, res) => {
+    if(!req.session.usuario){
+        res.redirect('index.html')
+    }
     var productos = Producto.find({ "estado": true });
     productos.then(prod => {
             res.json(prod);
@@ -337,6 +445,24 @@ ruta.get('api/buscarIdProducto/:id',(req,res)=>{
     .catch(err =>{
         res.json(400).json("Error");
     })
+});
+//--------------------BUSCAR PRODUCTOS X NOMBRE--------------------------
+ruta.post('/buscarC', (req, res) => {
+    var name = req.body.buscar;
+    var resultado = Producto.find({"producto":name});
+    resultado
+        .then(prod => {
+            if (prod.length > 0) {
+                res.render('productosVenta', { productos: prod });
+               
+            } else {
+                res.send('<script>alert("Producto no encontrado"); location.href = "/productosVenta";</script>'); 
+                                                    
+            }
+        })
+        .catch(err => {
+            res.status(400).send('Error al realizar la consulta' + err);
+        });
 });
 
 module.exports = ruta;

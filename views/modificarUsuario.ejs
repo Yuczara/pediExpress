@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-1 col-md-3"></div>
+        <div class="col-10 col-md-6">
+            <h1>Modificar un Usuario</h1>
+            <form action="/modificarUsuarioDatos" method="POST">
+                <input type="hidden" value="<%=usuario[0].id%>" name="id" id="id">
+                <input class="form form-control" value="<%=usuario[0].usuario%>" type="text" placeholder="Nombre de usuario" name="usuario" id="usuario" autofocus>
+                <input class="form form-control mt-3" value="<%=usuario[0].correo%>" type="email" placeholder="e-mail" name="correo" id="correo">
+                <input class="form form-control mt-3" value="<%=usuario[0].contrasena%>" type="text" placeholder="Contraseña" name="contrasena" id="contrasena">
+                <select class="form-select my-3" aria-label="Default select example" name="rol" id="rol">
+                    <option selected><%=usuario[0].rol%></option>
+                    <option value="vendedor">Vendedor</option>
+                    <option value="cliente">Cliente</option>
+                    <option value="admin">Administrador</option>
+                  </select>
+                <button class="form form-control btn btn-primary mt-3" type="submit">Modificar datos</button>
+                <a href="/mostrarUsuarios" class="btn btn-danger mt-3 col-12">Cancelar</a>
+            </form>
+
+        </div>
+    </div>
+</body>
+
+</html>

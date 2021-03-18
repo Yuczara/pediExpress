@@ -1,42 +1,18 @@
 <%- include('templates/cabeceraCliente.ejs') %>
 
-<img src="https://cdn.pixabay.com/photo/2020/05/21/18/52/supermarket-5202138_960_720.jpg" width="100%" >
-
-<!--<div class="mt-3 ">
-  <nav aria-label="Productos">
-    <ul class="pagination">
-      <li class="page-item disabled">
-        <span class="page-link">Previous</span>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item active" aria-current="page">
-        <span class="page-link">2</span>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="/cerrar">Cerrar sesion</a>
-      </li>
-    </ul>
-  </nav>
-</div>-->
 
 
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-10">
-            <div class="row">
-                <div class="col-5">
-                    <h1 class="display-1 mt-1 mb-3" >Productos</h1>
-                </div>
-             </div>
-        </div>
-    </div>
+<img src="../assets/super.jpg" width="100%">
+
 
     <div class="container">
+
+      <h1 class="display-1 mt-1 mb-3" >Productos</h1>
+
         <div class="row row-cols-1 row-cols-md-4 g-4">
             <% productos.forEach(producto => { %> 
                 <div class="card" style="width: 14rem; margin-left: 3rem; margin-bottom: 1rem;">
-                <img src="<%=producto.imagen%>" class="card-img-top" style="max-width:100%; width:auto; height:auto;">
+                <img src="<%=producto.imagen%>" class="card-img-top" style="height: auto;">
                 <div class="text-center">
                   <div class="row row-cols-1">  
                     <h5 class="card-title" style="align-content: center;"><%=producto.producto%></h5>
@@ -51,6 +27,44 @@
         <% }); %> 
         </div>    
 
+<hr>
+<div class="row"> 
+  <div class="col-1"></div>
+  <div class="col-10">
+      <div class="row">
+          <div class="col-5">
+              <h1 class="display-1 mt-1 mb-3" >Categorías</h1>
+          </div>
+       </div>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <img src="../assets/alimentos.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Canasta Básica</h5>
+    <p class="card-text">Encuentra todos lo que necesites en la canasta basica de tu hogar, alimentacion saludable y productos de alta calidad.</p>
+    <a href="alimentacion" style="text-decoration: none;" class="card-text"><small class="text-muted">Ir a Canasta Básica</small></a>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <img src="../assets/tecnologia.jpg" class="card-img-top">
+  <div class="card-body">
+    <h5 class="card-title">Tecnología</h5>
+    <p class="card-text">Contamos con una variedad de dispositivos eléctronicos, adquiere un equipo de computo, celular, tablet, entre otros.</p>
+    <a href="tecnologia" style="text-decoration: none;" class="card-text"><small class="text-muted">Ir a Tecnologías</small></a>
+  </div>
+</div>
+
+<div class="card">
+<img src="../assets/farmacia.jpg" class="card-img-top" alt="...">
+<div class="card-body">
+  <h5 class="card-title">Salud</h5>
+  <p class="card-text">Manten saludable a tu familia, encuentra una varidead de productos necesarios para la higiene y protección de la salid.</p>
+  <a href="salud" style="text-decoration: none;" class="card-text"><small class="text-muted">Ir Farmacia</small></a>
+</div>
+</div>
 
 </body>
 </html>

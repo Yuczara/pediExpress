@@ -64,20 +64,21 @@
                 </div>
                 <div class="col-lg-7 px-6 pt-5 "><center>
                     <h1 class="font-weight-bold py-3">PediExpress</h1>
+                    
                     <form action="/login" method="POST">
                         <div class="form-row">
                             <div class="col-lg-7">
-                                <input type="text" id='correo' name="correo" required placeholder="Ingresa mail" class="form-control mt-3 p-2" />
+                                <input required type="email" id='correo' name="correo"  placeholder="Ingresa mail" class="form-control mt-3 p-2" />
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-lg-7">
-                                <input type="text" id="contrasena" name="contrasena" placeholder="Ingresa contraseña" class="form-control mt-3 p-2" />
+                                <input required type="password" id="contrasena" name="contrasena" placeholder="Ingresa contraseña" class="form-control mt-3 p-2" />
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col-lg-7">
-                            <button class="btn1 mt-3 mb-3" type="submit" >Aceptar</button>
+                            <button class="btn1 mt-3 mb-3" type="submit"  >Aceptar</button>
                             <p>¿Aún no tienes una cuenta?<a href="/signIn.html">Registrate aquí</a></p>
 							</div>
                            </div> 
@@ -87,6 +88,7 @@
             </div>
         </div>
     </section>
+   
  </body>
 
 </html>

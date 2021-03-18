@@ -1,0 +1,90 @@
+<%- include('templates/cabeceraAdmin.ejs') %> 
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-11">
+            <div class="row">
+                <div class="col-5">
+                    <h1 class="display-1 mt-3 mb-3" >Productos</h1>
+                </div>
+                <div class="col-4"></div>
+                <div class="col-2 text-end flex mt-5"><a class="btn btn-primary" href="/insertarProductos.html">Nuevo registro</a></div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="container"><center>
+    <div class="row">
+        <div class="" col-1></div>
+        <div class="col-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Vendedor</th>
+                        <th scope="col">Ventas</th>
+                        <th scope="col">Total</th>
+                        <!--<th scope="col">Modificar/eliminar</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <% 
+                    var i=1;
+                    productos.forEach(producto => { %>
+                        <tr>
+                            <th scope="row">
+                                <%=i%>
+                            </th>
+                            <td>
+                                <%=producto.producto%>
+                            </td>
+                            <td>
+                                <img src="<%=producto.imagen%>" width="100">
+                            </td>
+                            <td>
+                                <%=producto.descripcion%>
+                            </td>
+                            <td>
+                                <%=producto.precio%>
+                            </td>
+                            <td>
+                                <%=producto.cantidad%>
+                            </td>
+                            <td>
+                                <%=producto.categoria%>
+                            </td>
+                            <td>
+                                <%=producto.empresa%>
+                            </td>
+                            <td>
+                                <%=producto.ventas%>
+                            </td>
+                            <td>
+                                <%=producto.precio*producto.cantidad%>
+                            </td>
+                            <!-- <td class="align-middle">
+                                <h3><a type="button" class=" btn btn-success btn-sm" href="/buscarID/<%=producto.id%>">Actualiza✏️</a><a type="button" class="mt-2 btn btn-danger btn-sm" href="/eliminar/<%=producto.id%>">Eliminar 🗑️</a></h3>
+                           
+                            </td>-->
+
+                        </tr>
+                        <%
+                i++;
+                }); %>
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </div>
+</center></div>
+</body>
+
+</html>

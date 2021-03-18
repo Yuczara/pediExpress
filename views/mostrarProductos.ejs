@@ -1,4 +1,4 @@
-<%- include('templates/cabeceraVendedor.ejs') %> 
+<%-include('templates/cabeceraVendedor.ejs') ;%> 
 
     <div class="row">
         <div class="col-1"></div>
@@ -28,7 +28,7 @@
                         <th scope="col">Precio</th>
                         <th scope="col">Cantidad</th>
                         <th scope="col">Categoría</th>
-                        <th scope="col">Empresa</th>
+                        <th scope="col">Vendedor</th>
                         <th scope="col">Ventas</th>
                         <th scope="col">Total</th>
                         <th scope="col">Modificar/eliminar</th>
@@ -69,8 +69,9 @@
                             <td>
                                 <%=producto.precio*producto.cantidad%>
                             </td>
-                            <td>
-                                <h3><a style="text-decoration: none;" href="/buscarID/<%=producto.id%>">✏️</a>/<a style="text-decoration: none;" href="/eliminar/<%=producto.id%>">🗑️</a></h3>
+                            <td class="align-middle">
+                                <h3><a type="button" class=" btn btn-success btn-sm" href="/buscarID/<%=producto.id%>">Actualiza✏️</a><a type="button" class="mt-2 btn btn-danger btn-sm" href="/eliminar/<%=producto.id%>">Eliminar 🗑️</a></h3>
+                           
                             </td>
 
                         </tr>

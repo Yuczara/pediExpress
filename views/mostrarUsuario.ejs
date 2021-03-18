@@ -1,0 +1,70 @@
+<%- include('templates/cabeceraAdmin.ejs') %> 
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-11">
+            <div class="row">
+                <div class="col-5">
+                    <h1 class="display-1 mt-3 mb-3" >Usuarios</h1>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="container"><center>
+    <div class="row">
+        <div class="" col-1></div>
+        <div class="col-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Contraseña</th>
+                        <th scope="col">rol</th>
+                        <th scope="col">Modificar/eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% 
+                    var i=1;
+                    usuarios.forEach(usuario => { %>
+                        <tr>
+                            <th scope="row">
+                                <%=i%>
+                            </th>
+                            <td>
+                                <%=usuario.usuario%>
+                            </td>
+                            <td>
+                                <%=usuario.correo%>
+                            </td>
+                            <td>
+                                <%=usuario.contrasena%>
+                            </td>
+                            <td>
+                                <%=usuario.rol%>
+                            </td>
+                            <td><center>
+                                <h3><a type="button" class="btn btn-success btn-sm" href="/buscarIDU/<%=usuario.id%>">Actualiza✏️</a>
+                                <a type="button" class="mt-2 btn btn-danger btn-sm" href="/eliminarU/<%=usuario.id%>">Eliminar 🗑️</a></h3>
+                            </center>
+                            </td>
+
+                        </tr>
+                        <%
+                i++;
+                }); %>
+                </tbody>
+            </table>
+
+
+        </div>
+
+    </div>
+</center></div>
+</body>
+
+</html>

@@ -25,25 +25,25 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/views/productosVenta.ejs">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/productosVenta">Home</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Categorías
                 </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Canasta Básica</a></li>
-                            <li><a class="dropdown-item" href="#">Farmacia</a></li>
-                            <li><a class="dropdown-item" href="#">Belleza</a></li>
+                            <li><a class="dropdown-item" href="/alimentacion">Canasta Básica</a></li>
+                            <li><a class="dropdown-item" href="/salud">Farmacia</a></li>
+                            <li><a class="dropdown-item" href="/tecnologia">Tecnología</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link " href="/cerrar" tabindex="-1" >Cerrar sesion</a>
                     </li>
                 </ul>
-                <form action="/buscar" method="POST" class="d-flex">
-                    <input class="form-control me-2" type="search" name="buscar" id="buscar" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                <form action="/buscarC" method="POST" class="d-flex">
+                    <input class="form-control me-2" type="search" name="buscar" id="buscar" placeholder="Search" aria-label="Buscar">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
                 </form>
             </div>
         </div>
